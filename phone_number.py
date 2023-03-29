@@ -5,6 +5,7 @@ import rapidjson
 
 app = Flask(__name__)
 
+
 @app.route("/phone_info/<string:phone_number>", methods=["GET"])
 def phone_info(phone_number):
     try:
@@ -13,12 +14,18 @@ def phone_info(phone_number):
         operator = carrier.name_for_number(number, "en")
         country = geocoder.description_for_number(number, "en")
 
-        response = {"timezone": time_zone, "operator": operator, "country": country}
-        return rapidjson.dumps(response,sort_keys=False)
+        response = {
+            "timezone": time_zone,
+            "operator": operator,
+            "country": country
+        }
+        return rapidjson.dumps(response, sort_keys=False)
     except phonenumbers.phonenumberutil.NumberParseException as e:
         return jsonify({"error": str(e)})
 
-if __name__ == "__main__":
-    app.run(debug=True)
 
-# http://localhost:5000/phone_info/+37253654136
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=81)
+
+# http://localhost:81/phone_info/+37253654136
+# https://phone.rix4uni.repl.co/phone_info/+37253654136

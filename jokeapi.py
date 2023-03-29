@@ -8,5 +8,7 @@ def joke():
     return jsonify(joke=pyjokes.get_joke())
 
 if __name__ == '__main__':
-    app.run()
-# http://localhost:5000/joke
+    app.run(host='0.0.0.0', port=81)
+
+# http://localhost:81/joke
+# https://joke.rix4uni.repl.co/joke
